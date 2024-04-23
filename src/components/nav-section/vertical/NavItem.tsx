@@ -29,6 +29,7 @@ export function NavItemRoot({ item, isCollapse, open = false, active, onOpen }) 
   const renderContent = (
     <>
       {icon && <ListItemIconStyle>{icon}</ListItemIconStyle>}
+      {/* {icon &&icon} */}
       <ListItemTextStyle disableTypography primary={title} isCollapse={isCollapse} />
       {!isCollapse && (
         <>

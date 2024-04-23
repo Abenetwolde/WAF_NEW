@@ -20,7 +20,9 @@ import navConfig from './NavConfig';
 // import NavbarDocs from './NavbarDocs';
 import NavbarAccount from './NavbarAccount';
 import CollapseButton from './CollapseButton';
-
+import SvgIcon from '../../../theme/overrides/SvgIcon';
+import SvgIconStyle from '../../../components/SvgIconStyle';
+import dash from  '../../../assets/menuIcons/dashboard-reference-svgrepo-com.svg'
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
@@ -75,7 +77,7 @@ export default function NavbarVertical({ isOpenSidebar, onCloseSidebar }) {
       >
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           <Logo />
-
+          
           {isDesktop && !isCollapse && (
             <CollapseButton onToggleCollapse={onToggleCollapse} collapseClick={collapseClick} />
           )}

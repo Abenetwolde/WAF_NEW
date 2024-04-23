@@ -55,7 +55,11 @@ function AnimateWrap({ size, children }) {
       whileHover="hover"
       variants={(isSmall && varSmall) || (isLarge && varLarge) || varMedium}
       sx={{
-        display: 'inline-flex'
+        display: 'inline-flex',
+        // Add custom style to remove default border color
+        '& .MuiIconButton-root .MuiOutlinedInput-notchedOutline': {
+          border: 'none',
+        },
       }}
     >
       {children}

@@ -27,6 +27,23 @@ export default function ThemeProvider({ children }: any) {
     direction: themeDirection,
     shadows: isLight ? shadows.light : shadows.dark,
     customShadows: isLight ? customShadows.light : customShadows.dark,
+    components: {
+      MuiOutlinedInput: {
+        styleOverrides: {
+          root: {
+            '& $notchedOutline': {
+              border: 'none',
+            },
+            '&:hover $notchedOutline': {
+              border: 'none', // Change the border color on hover
+            },
+            '&$focused $notchedOutline': {
+              border: 'none',// Change the border color when focused
+            },
+          },
+        },
+      },
+    }
   }), [isLight, themeDirection]);
 
   const theme = createTheme(themeOptions);

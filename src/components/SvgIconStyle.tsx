@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Box } from '@mui/material';
-
+// import dashboard from  '../assets/menuIcons/dashboard.svg'
 // ----------------------------------------------------------------------
 
 SvgIconStyle.propTypes = {
