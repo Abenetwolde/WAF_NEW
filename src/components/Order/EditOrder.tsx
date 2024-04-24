@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 // import { updateCategorySuccess } from '../redux/categorySlice';
 import { useDispatch } from 'react-redux';
-import api from '../../services/api';
+import api from '../../utils/axios/api';
 
 import { UpdateOrdertResponse, EditOrderModalProps, Order } from '../../types/order/order';
 import { updateProductSuccess } from '../../redux/productSlice';

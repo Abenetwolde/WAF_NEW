@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Box, Stack, AppBar, Toolbar, Tooltip, MenuItem, FormControl, Select, Typography } from '@mui/material';
+import { Box, Stack, AppBar, Toolbar, Tooltip, MenuItem, FormControl, Select, Typography, useTheme } from '@mui/material';
 // hooks
 import useOffSetTop from '../../../hooks/useOffSetTop';
 import useResponsive from '../../../hooks/useResponsive';
 // utils
 import cssStyles from '../../../utils/cssStyles';
 // config
+
 import { HEADER, NAVBAR } from '../../../config';
 // components
 import Logo from '../../../components/Logo';
@@ -24,9 +25,13 @@ import Image from "../../../components/Image";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFirewalls, setSelectedFirewall } from '../../../redux/firewall/firewall';
 import { useEffect, useState } from 'react';
-import { userLogout } from '../../../redux/userSlice';
+// import { userLogout } from '../../../redux/userSlice';
+
 import {  IconButton, Popover,Link, Avatar } from '@mui/material';
 import { Logout } from '@mui/icons-material';
+import { userLogout } from '../../../redux/user';
+import { useFetchFirewallsQuery } from '../../../redux/firewall/firewallAPi';
+// import { theme } from 'antd';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(AppBar, {
@@ -68,25 +73,24 @@ DashboardHeader.propTypes = {
 export default function DashboardHeader({ onOpenSidebar, isCollapse = false, verticalLayout = false }) {
   const isOffset = useOffSetTop(HEADER.DASHBOARD_DESKTOP_HEIGHT) && !verticalLayout;
 const navigate=useNavigate()
+;
+const theme = useTheme();
+const token =useSelector(state=> state.auth.user)
+
+const header:any =  {headers: {
+  Authorization: token
+}}
+
+ const { data, error, isLoading }:any = useFetchFirewallsQuery(header)
+console.log("firewalls...............",data?.response||[])
   const isDesktop = useResponsive('up', 'lg');
   const dispatch = useDispatch();
 
-  const firewalls = useSelector((state) => state?.firewalls.firewalls);
-  console.log("firewalls........", firewalls)
-  const selectedFirewall = useSelector((state) => state?.firewalls.selectedFirewall);
-  console.log("selectedFirewall........", selectedFirewall)
+  const selectedFirewall = useSelector((state) => state?.firewall.selectedFirewall);
   const handleFirewallSelect = (firewall) => {
-    console.log("selectedFFFFFF.......", selectedFirewall)
     dispatch(setSelectedFirewall(firewall));
   };
-
-  useEffect(() => {
-    dispatch(fetchFirewalls());
-  }, [dispatch]);
-
-  const [anchorEl, setAnchorEl] = useState(null);
-
-
+const [anchorEl, setAnchorEl] = useState(null);
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -99,13 +103,13 @@ const navigate=useNavigate()
     // Clear token from localStorage and Redux state
     // localStorage.removeItem('user');
     dispatch(userLogout());
-    navigate.navigator("auth/login")
+    navigate.navigate("auth/login")
     // Redirect to login page
-    window.location.href = '/login'; // or use React Router's history for navigation
+    // window.location.href = '/login'; // or use React Router's history for navigation
   };
 
   const open = Boolean(anchorEl);
-
+  const isLight = theme.palette.mode === 'light';
 
   return (
     <RootStyle isCollapse={isCollapse} isOffset={isOffset} verticalLayout={verticalLayout}>
@@ -126,33 +130,41 @@ const navigate=useNavigate()
         <Searchbar />
         <Box sx={{ flexGrow: 1 }} />
         <Box sx={{display:"flex",alignItems:"center", justifyContent:"center"}}>
-          <Box height={40} width={200} >
-            <FormControl fullWidth>
+          <>
+          </>
+         {isLoading? <Box sx={{  backgroundColor: theme.palette.grey[isLight ? 900 : 0],}} height={40} width={200}>
+                <Typography>Loading.....</Typography>:
+              </Box>
+         :
+          <Box height={30} width={200} >
+          <FormControl fullWidth>
 
-              <Select
-                labelId="firewall-label"
-                id="firewall"
-                defaultValue={selectedFirewall ? selectedFirewall?.hostname : 'Select a Firewall'}
-                value={selectedFirewall ? selectedFirewall.hostname : 'Select a Firewall'}
-                renderValue={(value) => (
-                  <Typography variant="body1" color="textPrimary">
-                    {value || 'Select a Firewall'}
-                  </Typography>
-                )}
-              // onChange={(event) => handleFirewallSelect(event.target.value)}
-              >
-                {/* {selectedFirewall ? selectedFirewall.hostname : 'Select a Firewall'} */}
+            <Select
+              labelId="firewall-label"
+              id="firewall"
+              defaultValue={selectedFirewall ? selectedFirewall?.hostname : 'Select a Firewall'}
+              value={selectedFirewall ? selectedFirewall.hostname : 'Select a Firewall'}
+              renderValue={(value) => (
+                <Typography variant="body1" color="textPrimary">
+                  {value || 'Select a Firewall'}
+                </Typography>
+              )}
+            // onChange={(event) => handleFirewallSelect(event.target.value)}
+            >
+              {/* {selectedFirewall ? selectedFirewall.hostname : 'Select a Firewall'} */}
 
 
 
-                {firewalls?.map((firewall) => (
-                  <MenuItem key={firewall._id} value={firewall.hostname} onClick={() => handleFirewallSelect(firewall)}>
-                    {firewall?.hostname}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
+              {  data?.response?.map((firewall) => (
+                <MenuItem key={firewall._id} value={firewall.hostname} onClick={() => handleFirewallSelect(firewall)}>
+                  {firewall?.hostname}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
+         }
+         
           <Stack direction="row" alignItems="center" onClick={handlePopoverOpen} spacing={{ xs: 0.5, sm: 1.5 }}>
             <IconButtonAnimate placement="right">
               {/* <a href="https://github.com/shakilhasan/sabil"> */}

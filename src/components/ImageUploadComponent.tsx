@@ -1,7 +1,7 @@
 // src/components/ImageUploadComponent.tsx
 import React, { useState } from 'react';
 
-import api from '../services/api';
+import api from '../utils/axios/api';
 
 interface ImageUploadComponentProps {
   onUploadFinish: (imageUrls: string[]) => void;

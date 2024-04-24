@@ -6,15 +6,3 @@ interface User {
     role: string | null;
 
 }
-// export interface EditUserProps {
-//     isOpen: boolean;
-//     handleClose: () => void;
-//     editedRow: User | null;
-//     setEditedRow: React.Dispatch<React.SetStateAction<User | null>>;
-//   }
-//   export interface DeleteUserProps {
-//     isOpen: boolean;
-//     handleClose: () => void;
-//     deletedItem: User | null;
-
-//   }

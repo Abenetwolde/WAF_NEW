@@ -8,7 +8,7 @@ import Login from '../Page/auth/Login';
 // components
 import LoadingScreen from '../components/LoadingScreen';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLoading } from '../redux/userSlice';
+// import { setLoading } from '../redux/userSlice';
 
 // ----------------------------------------------------------------------
 
@@ -23,12 +23,12 @@ export default function AuthGuard({ children }) {
   const [requestedLocation, setRequestedLocation] = useState(null);
   const isAuthenticated = useSelector((state) => state?.auth.user);
   const isInitialized = useSelector((state) => state?.auth.isLoading);
-  console.log("isAuthenticated from dashboard.................",isAuthenticated.token)
+  // console.log("isAuthenticated from dashboard.................",isAuthenticated.token)
   if (isInitialized) {
     return <LoadingScreen isDashboard={true} />;
   }
 
-  if (!isAuthenticated.token) {
+  if (!isAuthenticated) {
     if (pathname !== requestedLocation) {
       setRequestedLocation(pathname);
     }
@@ -36,7 +36,7 @@ export default function AuthGuard({ children }) {
   }
 
   if (requestedLocation && pathname !== requestedLocation) {
-    dispatch(setLoading(false))
+    // dispatch(setLoading(false))
     setRequestedLocation(null);
     return <Navigate to={requestedLocation} />;
   }

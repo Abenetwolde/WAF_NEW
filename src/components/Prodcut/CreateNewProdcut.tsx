@@ -4,13 +4,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import api from '../../services/api';
-import { createProduct } from '../../services/product';
+import api from '../../utils/axios/api';
+import { createProduct } from '../../utils/axios/product';
 import { useDispatch } from 'react-redux';
 import { createProductSuccess, fetchProductSuccess } from '../../redux/productSlice';
 import { Category } from '../../types/product';
 import { Autocomplete, Typography } from '@mui/material';
-import { getCategoryList } from '../../services/category';
+import { getCategoryList } from '../../utils/axios/category';
 import { ApiResponse, CategoryApi } from '../../types/Category';
 import { Height } from '@mui/icons-material';
 import Button from '@mui/material/Button';

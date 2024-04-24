@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { EditModalProps, EditApiResponse } from '../types/Category';
 import { updateCategorySuccess } from '../redux/categorySlice';
 import { useDispatch } from 'react-redux';
-import api from '../services/api';
+import api from '../utils/axios/api';
 
 const EditModal: React.FC<EditModalProps> = ({ isOpen, handleClose, editedRow, setEditedRow }) => {
     const dispatch = useDispatch();

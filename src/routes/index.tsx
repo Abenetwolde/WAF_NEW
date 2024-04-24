@@ -65,7 +65,13 @@ export default function Router() {
 
     {
       path: '/',
-      element: <DashboardLayout />,
+        element: (
+        <RoledGuard>
+          <AuthGuard>
+        <DashboardLayout />
+       </AuthGuard>
+      </RoledGuard> 
+      ),
       children: [
         { element: <Dashboard />, index: true }, //todo uncomment when ready
         { element: <Navigate to='/auth/login' replace />, index: true },

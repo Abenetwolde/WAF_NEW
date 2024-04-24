@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createCategory } from '../services/category';
+import { createCategory } from '../utils/axios/category';
 import { createCategorySuccess, /* fetchCategories */ } from '../redux/categorySlice';
 import { toast } from 'react-toastify';
 import { Button, TextField, Typography, useTheme } from "@mui/material";

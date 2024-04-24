@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { DeleteConfirmationModalProps,ApiResponse  } from '../types/Category';
 import { deleteCategorySuccess } from '../redux/categorySlice';
 import { useDispatch } from 'react-redux';
-import api from '../services/api';
+import api from '../utils/axios/api';
 const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
     isOpen,
     handleClose,

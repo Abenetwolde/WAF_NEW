@@ -23,7 +23,7 @@ const Dashboard = () => {
   );
 
 
-  const selectedFirewall = useSelector((state) => state?.firewalls.selectedFirewall);
+  const selectedFirewall = useSelector((state) => state?.firewall.selectedFirewall);
 
   return (
     <div className="pb-6 mb-6   ">

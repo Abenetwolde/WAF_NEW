@@ -17,7 +17,7 @@ export default function GuestGuard({ children }) {
   const isAuthenticated = useSelector((state) => state?.auth.user);
   console.log("isAuthenticated.................",isAuthenticated.token)
 
-  if (isAuthenticated.token!==null) {
+  if (isAuthenticated!==null) {
     return <Navigate to={PATH_DASHBOARD.root} />;
   }
 

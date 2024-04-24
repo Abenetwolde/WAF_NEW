@@ -18,10 +18,11 @@ import useIsMountedRef from '../../../hooks/useIsMountedRef';
 import Iconify from '../../Iconify';
 // import { FormProvider, RHFTextField, RHFCheckbox } from '../../../components/hook-form';
 import { FormProvider, RHFTextField, RHFCheckbox } from '../../hook-form';
-import api from '../../../services/api';
+import api from '../../../utils/axios/api';
 import { useDispatch } from 'react-redux';
-import { setLoading, setToken } from '../../../redux/userSlice';
-
+// import { setLoading, setToken } from '../../../redux/userSlice';
+import { useLoginMutation } from '../../../redux/user/authApi';
+import { setUser } from '../../../redux/user';
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
@@ -30,7 +31,7 @@ export default function LoginForm() {
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const isMountedRef = useIsMountedRef();
-
+// const {loginMutation}=useLoginMutation ()
   const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
@@ -41,7 +42,7 @@ export default function LoginForm() {
   const defaultValues = {
     username: 'pmo_admin',
     password: 'pmo@1234',
-    remember: true,
+    // remember: true,
   };
 
   const methods = useForm({
@@ -63,18 +64,27 @@ export default function LoginForm() {
     try {
       console.log(".................login data",data)
       // const data = await methods.trigger(); // Trigger form validation
-      const { username, password } = data;
+      // const { username, password } = data;
 
-      const response = await api.post('auth/login', { username, password });
-      console.log("Login response:", response);
+      // const response = await api.post('auth/login', { username, password });
+      // console.log("Login response:", response);
 
-      if (response.data) {
-        dispatch(setToken(response.data));
-        localStorage.setItem('user', JSON.stringify(response.data));
-        dispatch(setLoading(true))
-        navigate("/dashboard/analysis");
+      // if (response.data) {
+      //   dispatch(setToken(response.data));
+      //   localStorage.setItem('user', JSON.stringify(response.data));
+      //   dispatch(setLoading(true))
+      //   navigate("/dashboard/analysis");
+      // } else {
+      //   setError('Invalid credentials');
+      // }
+      const response = await loginMutation(data)/* .unwrap(); */;
+      console.log("login response",response.error.data)
+      if (response?.data) {
+        setError('afterSubmit', { message: response });
       } else {
-        setError('Invalid credentials');
+        
+         dispatch(setUser(response.error.data)); // Dispatch setUser action to update user state
+        navigate('/dashboard/analysis');
       }
     } catch (error) {
       console.error(error);
@@ -84,11 +94,12 @@ export default function LoginForm() {
       }
     }
   };
+  const [loginMutation]   = useLoginMutation();
   // const { control } = useFormContext();/
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3}>
-        {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
+        {/* {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>} */}
         <RHFTextField  name="username"  label="User Name" />
 
 

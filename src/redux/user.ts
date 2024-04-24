@@ -25,8 +25,8 @@ const authSlice = createSlice({
             state = { ...action.payload };
             // console.log("user from state", state.user);
         },
-        userLogout: (state, action) => {
-            state.user.token=null
+        userLogout: (state) => {
+            state.user=null
             localStorage.removeItem('user');
             // console.log("user from state", state.user);
         },

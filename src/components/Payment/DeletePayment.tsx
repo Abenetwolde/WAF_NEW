@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { DeleteProductResponse ,DeleteConfirmationProdcutModalProps} from '../../types/product';
 import { useDispatch } from 'react-redux';
-import api from '../../services/api';
+import api from '../../utils/axios/api';
 import { deleteProductSuccess, } from '../../redux/productSlice';
 const DeleteProduct: React.FC<DeleteConfirmationProdcutModalProps> = ({
     isOpen,

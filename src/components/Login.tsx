@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {  setUser  } from '../features/authSlice';
 
-import api from '../services/api';
+import api from '../utils/axios/api';
 import {  useNavigate } from 'react-router-dom';
 const Login: React.FC = () => {
   const dispatch = useDispatch();

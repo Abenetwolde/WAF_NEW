@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { DeleteProductResponse ,DeleteConfirmationProdcutModalProps} from '../../types/product';
 import { useDispatch } from 'react-redux';
-import api from '../../services/api';
+import api from '../../utils/axios/api';
 import { DeleteUserProps } from '../../types/User/user';
 import { deleteProductSuccess, } from '../../redux/productSlice';
 import { deleteUserSuccess } from '../../redux/userSlice';
