@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Box, Stack, AppBar, Toolbar, Tooltip, MenuItem, FormControl, Select, Typography, useTheme } from '@mui/material';
+import { Box, Stack, AppBar, Toolbar,  MenuItem, FormControl, Select, Typography, useTheme } from '@mui/material';
 // hooks
 import useOffSetTop from '../../../hooks/useOffSetTop';
 import useResponsive from '../../../hooks/useResponsive';
@@ -23,20 +23,16 @@ import Searchbar from './Searchbar';
 // import NotificationsPopover from './NotificationsPopover';
 import Image from "../../../components/Image";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchFirewalls, setSelectedFirewall } from '../../../redux/firewall/firewall';
-import { useEffect, useState } from 'react';
-// import { userLogout } from '../../../redux/userSlice';
-
-import {  IconButton, Popover,Link, Avatar } from '@mui/material';
+import { setSelectedFirewall } from '../../../redux/firewall/firewall';
+import {  useState } from 'react';
+import {  IconButton, Popover,Link,} from '@mui/material';
 import { Logout } from '@mui/icons-material';
 import { userLogout } from '../../../redux/user';
 import { useFetchFirewallsQuery } from '../../../redux/firewall/firewallAPi';
-// import { theme } from 'antd';
-// ----------------------------------------------------------------------
-
+import { RootState } from '../../../redux/store';
 const RootStyle = styled(AppBar, {
   shouldForwardProp: (prop) => prop !== 'isCollapse' && prop !== 'isOffset' && prop !== 'verticalLayout',
-})(({ isCollapse, isOffset, verticalLayout, theme }) => ({
+})(({ isCollapse, isOffset, verticalLayout, theme }:any) => ({
   ...cssStyles(theme).bgBlur(),
   boxShadow: 'none',
   height: HEADER.MOBILE_HEIGHT,
@@ -72,10 +68,11 @@ DashboardHeader.propTypes = {
 
 export default function DashboardHeader({ onOpenSidebar, isCollapse = false, verticalLayout = false }) {
   const isOffset = useOffSetTop(HEADER.DASHBOARD_DESKTOP_HEIGHT) && !verticalLayout;
-const navigate=useNavigate()
+const navigate:any=useNavigate()
 ;
 const theme = useTheme();
-const token =useSelector(state=> state.auth.user)
+
+const token =useSelector((state:RootState)=> state.auth.user)
 
 const header:any =  {headers: {
   Authorization: token
@@ -86,7 +83,7 @@ console.log("firewalls...............",data?.response||[])
   const isDesktop = useResponsive('up', 'lg');
   const dispatch = useDispatch();
 
-  const selectedFirewall = useSelector((state) => state?.firewall.selectedFirewall);
+  const selectedFirewall = useSelector((state:RootState) => state?.firewall.selectedFirewall);
   const handleFirewallSelect = (firewall) => {
     dispatch(setSelectedFirewall(firewall));
   };
@@ -123,21 +120,22 @@ const [anchorEl, setAnchorEl] = useState(null);
 
         {!isDesktop && (
           <IconButtonAnimate onClick={onOpenSidebar} sx={{ mr: 1, color: 'text.primary' }}>
-            <Iconify icon="eva:menu-2-fill" />
+            <Iconify icon="eva:menu-2-fill" sx={undefined} />
           </IconButtonAnimate>
         )}
 
         <Searchbar />
         <Box sx={{ flexGrow: 1 }} />
-        <Box sx={{display:"flex",alignItems:"center", justifyContent:"center"}}>
-          <>
-          </>
+        <Box sx={{display:"flex",alignItems:"center",  justifyContent:"center"}}>
+    
+    
          {isLoading? <Box sx={{  backgroundColor: theme.palette.grey[isLight ? 900 : 0],}} height={40} width={200}>
                 <Typography>Loading.....</Typography>:
               </Box>
          :
-          <Box height={30} width={200} >
-          <FormControl fullWidth>
+         
+         <Stack direction="row" alignItems="center"  spacing={{ xs: 0.5, sm: 1.5 }}>
+          <FormControl size="small" fullWidth>
 
             <Select
               labelId="firewall-label"
@@ -162,7 +160,7 @@ const [anchorEl, setAnchorEl] = useState(null);
               ))}
             </Select>
           </FormControl>
-        </Box>
+          </Stack>
          }
          
           <Stack direction="row" alignItems="center" onClick={handlePopoverOpen} spacing={{ xs: 0.5, sm: 1.5 }}>
@@ -172,8 +170,7 @@ const [anchorEl, setAnchorEl] = useState(null);
                 disabledEffect
                 src={"https://th.bing.com/th/id/R.7cc6700806813e7b59d4d99246153a31?rik=OAY9pMXChvkauw&pid=ImgRaw&r=0"}
                 // src={`/icons/ic_github.svg`}
-                sx={{ width: 42, height: 42 }}
-              />
+                sx={{ width: 42, height: 42 }} ratio={undefined}              />
               {/* </a> */}
             </IconButtonAnimate>
 
@@ -195,13 +192,13 @@ const [anchorEl, setAnchorEl] = useState(null);
           horizontal: 'right',
         }}
       >
-        <Stack direction="column" alignItems="center" spacing={1} sx={{ p: 1 }}>
-          <Link to="#" onClick={handleLogout}>
+        <Stack direction="row" alignItems="center" spacing={1} sx={{ p: 1 }}onClick={handleLogout}sx={{ cursor: 'pointer' } }>
+ 
             <IconButton color="inherit">
               <Logout fontSize="small" />
             </IconButton>
-            Logout
-          </Link>
+            <Typography sx={{fontSize:theme.typography.fontSize}}>Logout</Typography>
+        
         </Stack>
       </Popover>
         </Box>

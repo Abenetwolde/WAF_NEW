@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 // @mui
 import { styled, useTheme } from '@mui/material/styles';
-import { Box, Stack, Drawer } from '@mui/material';
+import { Box, Stack, Drawer, Typography } from '@mui/material';
 // hooks
 import useResponsive from '../../../hooks/useResponsive';
 import useCollapseDrawer from '../../../hooks/useCollapseDrawer';
@@ -13,7 +13,7 @@ import cssStyles from '../../../utils/cssStyles';
 import { NAVBAR } from '../../../config';
 // components
 import Logo from '../../../components/Logo';
-import Scrollbar from '../../../components/Scrollbar';
+import Scrollbar from '../../../components/scrollbar';
 import { NavSectionVertical } from '../../../components/nav-section';
 //
 import navConfig from './NavConfig';
@@ -32,6 +32,7 @@ const RootStyle = styled('div')(({ theme }) => ({
       duration: theme.transitions.duration.shorter,
     }),
   },
+  overflowX: 'hidden',
 }));
 
 // ----------------------------------------------------------------------
@@ -75,9 +76,10 @@ export default function NavbarVertical({ isOpenSidebar, onCloseSidebar }) {
           ...(isCollapse && { alignItems: 'center' }),
         }}
       >
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Stack  spacing={3} direction="row" alignItems="center" justifyContent="space-between">
           <Logo />
-          
+          {!isCollapse&& <Typography variant="subtitle1" sx={{ color: theme.palette.mode === 'light' ? theme.palette.text.secondary : '#fff'  , }}> Gasha Av 
+      </Typography>}
           {isDesktop && !isCollapse && (
             <CollapseButton onToggleCollapse={onToggleCollapse} collapseClick={collapseClick} />
           )}

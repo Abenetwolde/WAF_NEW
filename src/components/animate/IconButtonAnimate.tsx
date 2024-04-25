@@ -6,7 +6,7 @@ import { Box, IconButton } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
-const IconButtonAnimate = forwardRef(({ children, size = 'medium', ...other }, ref) => (
+const IconButtonAnimate = forwardRef(({ children, size = 'medium', ...other }:any, ref) => (
   <AnimateWrap size={size}>
     <IconButton size={size} ref={ref} {...other}>
       {children}
@@ -56,6 +56,11 @@ function AnimateWrap({ size, children }) {
       variants={(isSmall && varSmall) || (isLarge && varLarge) || varMedium}
       sx={{
         display: 'inline-flex',
+        '& .MuiIconButton-root': {
+          '&:focus': {
+            outline: 'none', // Remove default focus outline
+          },
+        },
         // Add custom style to remove default border color
         '& .MuiIconButton-root .MuiOutlinedInput-notchedOutline': {
           border: 'none',

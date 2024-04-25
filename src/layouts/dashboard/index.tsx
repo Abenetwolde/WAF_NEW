@@ -24,9 +24,9 @@ const MainStyle = styled('main', {
   paddingBottom: HEADER.MOBILE_HEIGHT + 24,
   [theme.breakpoints.up('lg')]: {
 
-    // backgroundColor:theme.palette.background.default,
+    backgroundColor:theme.palette.background.default,
     paddingLeft: 16,
-    backgrounColor: theme.palette.background.default,
+    // backgrounColor: theme.palette.background.default,
     paddingRight: 16,
     paddingTop: HEADER.DASHBOARD_DESKTOP_HEIGHT + 24,
     paddingBottom: HEADER.DASHBOARD_DESKTOP_HEIGHT + 24,
