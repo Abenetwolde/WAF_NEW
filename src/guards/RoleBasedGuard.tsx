@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { Container, Alert, AlertTitle } from '@mui/material';
+import { RootState } from '../redux/store';
 
 // ----------------------------------------------------------------------
 
@@ -10,7 +11,7 @@ RoleBasedGuard.propTypes = {
 
 const useCurrentRole = () => {
   // Logic here to get current user role
-  const role = 'admin';
+  const role = useSelector((state:RootState) => state?.auth?.user?.role)||'admin';
   return role;
 };
 
